@@ -26,7 +26,6 @@
 			.buttons {
 				float: left;
 				padding: 0px;
-				width: 190px;
 			}
 			.buttons a {
 				color: #E2E2E2;
@@ -45,7 +44,7 @@
 				color: #E2E2E2;
 				padding: 5px;
 				background-color: rgba(153, 153, 153, 0.12);
-				width: 394px;
+				width: 358px;
 				overflow: hidden;
 
 			}
@@ -71,6 +70,7 @@
 		<a class="openFile" onclick="openfile()"><i class="fa fa-file-audio-o"></i></a>
 		<a class="play" onclick="replay()"><i class="fa fa-share"></i></a>
 		<a class="play" onclick="playpause()"><i class="fa fa-play"></i><i class="fa fa-pause"></i></a>
+		<a class="skip" onclick="back()"><i class="fa fa-step-backward"></i></a>
 		<a class="skip" onclick="skip()"><i class="fa fa-step-forward"></i></a>
 	</div>
 	<div class="meta">
@@ -156,16 +156,32 @@
 			};
 		};
 
+		/**
+		 * Creates one hell of a playlist.
+		 * discovers new tracks by traversing
+		 * directories recursive
+		 * 
+		 * @author Robert Agthe <robert@scriptshit.de
+		 * @param  {string} path [audio file path]
+		 */
 		var createPlaylist = function(path){
 			var music = searchForMoreMP3inThisDir(path);
 			playlist = [];
+
 			_.each(music.filteredDir, function(file){
 				playlist.push(file);
 			});
+
 			playlistPosition = _.findIndex(playlist, function(file){
 				return currentFile == file;
 			});
-			console.log("Playlist created!", playlist, playlistPosition, currentFile);
+
+			console.log(
+				"Playlist created!",
+				playlist,
+				playlistPosition,
+				currentFile
+			);
 		};
 
 		// Init Wavesurfer
@@ -202,6 +218,8 @@
 		 * @return {[type]} [description]
 		 */
 		ipc.on("open-file", function(path) {
+			// create a playlist from the parent dir
+			createPlaylist(path);
 			// load file, and play
 			loadtune(path);
 		});
@@ -228,6 +246,9 @@
 				},
 				function (fileNames) {
 					if (fileNames === undefined) return;
+					// create a playlist from the parent dir
+					createPlaylist(fileNames[0]);
+					// load this tune, and play
 					loadtune(fileNames[0]);
 			});
 		};
@@ -253,15 +274,44 @@
 			wavesurfer.play(0);
 		};
 
+		/**
+		 * skips one tune forward inside
+		 * the playlist
+		 * 
+		 * @author Robert Agthe <robert@scriptshit.de
+		 */
 		var skip = function(){
 			playlistPosition++;
-			if((playlistPosition+1) > playlist.length){
+			if((playlistPosition + 1) > (playlist.length-1)){
 				playlistPosition = 0;
 			}
 			var newMusicFilePath = playlist[playlistPosition];
+			// dont create a playlist, just play the next tune
 			loadtune(newMusicFilePath);
 		};
 
+		/**
+		 * skips one tune back in the current
+		 * playlist
+		 * 
+		 * @author Robert Agthe <robert@scriptshit.de
+		 */
+		var back = function(){
+			playlistPosition--;
+			if((playlistPosition - 1) < 0){
+				playlistPosition = (playlist.length-1);
+			}
+			var newMusicFilePath = playlist[playlistPosition];
+			// dont create a playlist, just play the next tune
+			loadtune(newMusicFilePath);
+		};
+
+		/**
+		 * loads one tune and plays it 
+		 * 
+		 * @author Robert Agthe <robert@scriptshit.de
+		 * @param  {string} file path to an audio file
+		 */
 		var loadtune = function(file){
 			// remember globally file
 			currentFile = file;
@@ -276,6 +326,7 @@
 					elMetatags.textContent = tags.title;
 				}
 			});
+
 			// display filename and path
 			var elFileinfo = document.querySelector(".fileinfo .path");
 			var filename = currentFile.substr(-40);
@@ -284,8 +335,6 @@
 			// load blob
 			//wavesurfer.load("file:///"+file);
 			wavesurfer.loadBlob(loadBinary(currentFile));
-			// create a playlist from the parent dir
-			createPlaylist(currentFile);
 		};
 
 		/**
@@ -297,6 +346,7 @@
 			var elPos = document.querySelector(".display_pos");
 			elPos.textContent = (currentTime/60).toFixed(2).replace(".",":");
 		}, 100);
+
 		// init 0 length / no tune loaded
 		var elLen = document.querySelector(".display_length");
 		elLen.textContent = "0:00";
@@ -309,16 +359,23 @@
 		holder.ondragover = function () {
 			return false;
 		};
+
 		holder.ondragleave = holder.ondragend = function () {
 			return false;
 		};
+
 		holder.ondrop = function (e) {
 			e.preventDefault();
 			var file = e.dataTransfer.files[0];
+
+			// create a playlist from the parent dir
+			// of the dropped track
+			createPlaylist(file.path);
+
+			// play the dropped track
 			loadtune(file.path);
 			return false;
 		};
-
 
 		// Load on startup...
 		// path to music file to load
@@ -326,7 +383,10 @@
 		// get the path to the file from the backend
 		// remote process ...
 		var loadOnStartup = remote.getGlobal("loadOnStartup");
+
 		if(loadOnStartup){
+			// create a playlist from the parent dir
+			createPlaylist(loadOnStartup);
 			// load file, and play
 			loadtune(loadOnStartup);
 		}
