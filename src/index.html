@@ -19,7 +19,7 @@
 				font-size: 16px;
 			}
 			#wave {
-				width: 600px; 
+				width: 600px;
 				height: 128px;
 				border-bottom: 1px solid #424242;
 			}
@@ -52,7 +52,7 @@
 			.meta .id3 span.metatags {
 				white-space: nowrap;
 				text-overflow: ellipsis;
-			} 
+			}
 			.meta .fileinfo {
 				overflow: hidden;
 				opacity: 0.5;
@@ -60,11 +60,11 @@
 			.meta .fileinfo span.path {
 				white-space: nowrap;
 				text-overflow: ellipsis;
-			} 
+			}
 		</style>
 	</head>
 	<body>
-	<div 
+	<div
 		id="wave">
 	</div>
 	<div class="buttons">
@@ -76,7 +76,7 @@
 	<div class="meta">
 		<div class="timing">
 			<span class="display_pos"></span>
-			<i class="fa fa-arrow-right"></i> 
+			<i class="fa fa-arrow-right"></i>
 			<span class="display_length"></span>
 		</div>
 		<div class="id3">
@@ -107,7 +107,7 @@
 		 * Converts a buffer into an ArrayBuffer
 		 * needed to convert read files to blobs
 		 * for WaveSurfer
-		 * 
+		 *
 		 * @author Robert Agthe <robert@scriptshit.de
 		 * @param  {string} buffer string of binary data
 		 * @return {array} Array Buffer
@@ -122,9 +122,9 @@
 		}
 
 		/**
-		 * Load binary from the filesystem and send it 
+		 * Load binary from the filesystem and send it
 		 * to generate a blob.
-		 * 
+		 *
 		 * @author Robert Agthe <robert@scriptshit.de
 		 * @param  {[type]} file [description]
 		 * @return {[type]}      [description]
@@ -178,9 +178,9 @@
 		});
 
 		/**
-		 * Event: Wavesurfer loaded a new track and is 
+		 * Event: Wavesurfer loaded a new track and is
 		 * ready to play... start play the song!
-		 * 
+		 *
 		 * @author Robert Agthe <robert@scriptshit.de
 		 */
 		wavesurfer.on('ready', function(){
@@ -218,18 +218,25 @@
 		 */
 		var openfile = function(){
 			dialog.showOpenDialog(
-				{ filters: [{ name: 'Audio', extensions: ['mp3','m4a','wav'] }]}, 
+				{
+					filters: [
+						{
+							name: 'Audio',
+							extensions: ['mp3','m4a','wav']
+						}
+					]
+				},
 				function (fileNames) {
 					if (fileNames === undefined) return;
 					loadtune(fileNames[0]);
-			}); 
+			});
 		};
 
 		/**
 		 * Event: Play Pause Button pressed
 		 * User wants to stop the song at the current position
 		 * or continue playing
-		 * 
+		 *
 		 * @author Robert Agthe <robert@scriptshit.de
 		 */
 		var playpause = function(){
@@ -239,7 +246,7 @@
 		/**
 		 * Event: Replay button pressed
 		 * User wants to start playing from the beginning
-		 * 
+		 *
 		 * @author Robert Agthe <robert@scriptshit.de
 		 */
 		var replay = function(){
@@ -316,7 +323,7 @@
 		// Load on startup...
 		// path to music file to load
 		// user opens the app with a file
-		// get the path to the file from the backend 
+		// get the path to the file from the backend
 		// remote process ...
 		var loadOnStartup = remote.getGlobal("loadOnStartup");
 		if(loadOnStartup){
