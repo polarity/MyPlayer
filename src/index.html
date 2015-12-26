@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>MyPlayer</title>
-		<link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css">
 		<style>
 			* {
 				margin: 0;
@@ -89,7 +89,7 @@
 		</div>
 	</div>
 	</body>
-	<script type="text/javascript" src="node_modules/wavesurfer.js/dist/wavesurfer.min.js"></script>
+	<script type="text/javascript" src="../node_modules/wavesurfer.js/dist/wavesurfer.min.js"></script>
 	<script type="text/javascript">
 		var remote = require('remote');
 		var fs = require("fs");
@@ -160,7 +160,7 @@
 		 * Creates one hell of a playlist.
 		 * discovers new tracks by traversing
 		 * directories recursive
-		 * 
+		 *
 		 * @author Robert Agthe <robert@scriptshit.de
 		 * @param  {string} path [audio file path]
 		 */
@@ -277,7 +277,7 @@
 		/**
 		 * skips one tune forward inside
 		 * the playlist
-		 * 
+		 *
 		 * @author Robert Agthe <robert@scriptshit.de
 		 */
 		var skip = function(){
@@ -293,7 +293,7 @@
 		/**
 		 * skips one tune back in the current
 		 * playlist
-		 * 
+		 *
 		 * @author Robert Agthe <robert@scriptshit.de
 		 */
 		var back = function(){
@@ -307,8 +307,8 @@
 		};
 
 		/**
-		 * loads one tune and plays it 
-		 * 
+		 * loads one tune and plays it
+		 *
 		 * @author Robert Agthe <robert@scriptshit.de
 		 * @param  {string} file path to an audio file
 		 */
