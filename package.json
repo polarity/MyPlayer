@@ -1,6 +1,6 @@
 {
-  "name": "MyPlayer",
-  "version": "0.0.1",
+  "name": "myplayer",
+  "version": "0.5.1",
   "description": "Player for Music. Simple, clean and easy.",
   "main": "src/main.js",
   "scripts": {
@@ -10,21 +10,36 @@
     "buildmac": "electron-packager . MyPlayer --out=./_bins/ --asar=true --icon=./src/img/myplayer.icns --platform=darwin --arch=x64 --version=0.25.1 --overwrite && cp ./src/osx/Info.plist ./_bins/MyPlayer-darwin-x64/MyPlayer.app/Contents/",
     "buildlinux": "electron-packager . MyPlayer --out=./_bins/ --asar=true --platform=linux --arch=all --version=0.25.1 --overwrite"
   },
+  "binaries": [
+    "https://share.ac/myplayer/bin/{name}/{name}-{version}-{platform}-{arch}-{configuration}.tgz"
+  ],
   "keywords": [
     "music",
-    "player"
+    "player",
+	"electron",
+	"winamp",
+	"nodeamp"
   ],
   "author": "Robert Agthe",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/polarity/MyPlayer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/polarity/MyPlayer/issues"
+  },
   "devDependencies": {
     "electron-packager": "^5.0.1"
   },
   "dependencies": {
+    "electron-plugins": "0.0.4",
     "electron-single-instance": "*",
+    "electron-updater": "^0.2.3",
     "font-awesome": "^4.4.0",
-    "lodash": "^3.10.1",
-    "wavesurfer.js": "^1.0.30",
     "id3js": "^1.1.3",
-    "recursive-readdir-sync": "^1.0.6"
+    "lodash": "^3.10.1",
+    "recursive-readdir-sync": "^1.0.6",
+    "wavesurfer.js": "^1.0.30"
   }
 }
