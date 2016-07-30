@@ -4,8 +4,14 @@
   "description": "Player for Music. Simple, clean and easy.",
   "main": "src/main.js",
   "build": {
-    "appId": "scriptshit.MyPlayer",
-    "app-category-type": "scriptshit.media"
+    "appId": "com.github.electron.myplayer",
+    "app-category-type": "public.app-category.music",
+    "mac": {
+      "icon": ""
+    },
+    "win": {
+      "icon": ""
+    }
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
