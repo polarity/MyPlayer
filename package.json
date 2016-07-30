@@ -3,24 +3,29 @@
   "version": "0.5.1",
   "description": "Player for Music. Simple, clean and easy.",
   "main": "src/main.js",
+  "build": {
+    "appId": "scriptshit.MyPlayer",
+    "app-category-type": "scriptshit.media"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "buildwin": "electron-packager ./src MyPlayer --out=./_bins/ --asar=true --icon=./src/img/myplayer.ico --platform=win32 --arch=all --version=0.25.1 --overwrite",
-    "buildmac": "electron-packager . MyPlayer --out=./_bins/ --asar=true --icon=./src/img/myplayer.icns --platform=darwin --arch=x64 --version=0.25.1 --overwrite && cp ./src/osx/Info.plist ./_bins/MyPlayer-darwin-x64/MyPlayer.app/Contents/",
-    "buildlinux": "electron-packager . MyPlayer --out=./_bins/ --asar=true --platform=linux --arch=all --version=0.25.1 --overwrite"
+    "postinstall": "install-app-deps",
+    "pack": "build --dir",
+    "dist": "build"
   },
-  "binaries": [
-    "https://share.ac/myplayer/bin/{name}/{name}-{version}-{platform}-{arch}-{configuration}.tgz"
-  ],
   "keywords": [
     "music",
     "player",
-	"electron",
-	"winamp",
-	"nodeamp"
+    "electron",
+    "winamp",
+    "nodeamp"
   ],
-  "author": "Robert Agthe",
+  "author": { 
+    "name" : "Robert Agthe",
+    "email" : "robert@scriptshit.de",
+    "url" : "http://scriptshit.de"
+  },
   "license": "ISC",
   "repository": {
     "type": "git",
@@ -30,11 +35,11 @@
     "url": "https://github.com/polarity/MyPlayer/issues"
   },
   "devDependencies": {
-    "electron-packager": "^5.0.1"
+    "electron-builder": "*",
+    "electron-prebuilt": "^1.3.1"
   },
   "dependencies": {
     "electron-plugins": "0.0.4",
-    "electron-single-instance": "*",
     "electron-updater": "^0.2.3",
     "font-awesome": "^4.4.0",
     "id3js": "^1.1.3",

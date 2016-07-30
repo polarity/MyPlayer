@@ -1,13 +1,18 @@
-var app = require('app'); // Module to control application life.
-var BrowserWindow = require('browser-window'); // Module to create native browser window.
-var ipc = require('ipc');
-var ESI = require('electron-single-instance');
+var app = require('electron').app; // Module to control application life.
+var BrowserWindow = require('electron').BrowserWindow; // Module to create native browser window.
+var ipc = require('electron').ipcMain;
 
 // Windows: Only ONE single App Instance possible
-ESI.ensureSingleInstance('MyPlayer');
+// ESI.ensureSingleInstance('MyPlayer');
+// use this https://github.com/electron/electron/blob/master/docs/api/app.md#appmakesingleinstancecallback
 
 // Report crashes to our server.
-require('crash-reporter').start();
+require('electron').crashReporter.start({
+  productName: 'MyPlayer',
+  companyName: 'Scriptshit',
+  submitURL: 'https://scriptshit.de/',
+  autoSubmit: true
+});
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
@@ -78,7 +83,7 @@ var createMainPlayerWindow = function() {
 	});
 
 	// and load the index.html of the app.
-	mainWindow.loadUrl('file://' + __dirname + '/index.html');
+	mainWindow.loadURL('file://' + __dirname + '/index.html');
 
 	// Open the devtools.
 	//mainWindow.openDevTools();
