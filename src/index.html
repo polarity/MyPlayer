@@ -91,12 +91,12 @@
 	</body>
 	<script type="text/javascript" src="../node_modules/wavesurfer.js/dist/wavesurfer.min.js"></script>
 	<script type="text/javascript">
-		var remote = require('remote');
+		var remote = require('electron').remote;
 		var fs = require("fs");
 		var _ = require("lodash");
 		var pathHelper = require("path");
-		var dialog = remote.require('dialog');
-		var ipc = require('ipc');
+		var dialog = require('electron').remote.dialog;
+		var ipc = require('electron').ipcRenderer;
 		var playlist = [];
 		var playlistPosition = false;
 		var currentFile = false;
