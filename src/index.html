@@ -165,6 +165,9 @@
 		 * @param  {string} path [audio file path]
 		 */
 		var createPlaylist = function(path){
+			// remember playlist src dir
+			localStorage.setItem("lastDir", path);
+
 			var music = searchForMoreMP3inThisDir(path);
 			playlist = [];
 
@@ -382,7 +385,7 @@
 		// user opens the app with a file
 		// get the path to the file from the backend
 		// remote process ...
-		var loadOnStartup = remote.getGlobal("loadOnStartup");
+		var loadOnStartup = remote.getGlobal("loadOnStartup") || localStorage.getItem("lastDir") || false;
 
 		if(loadOnStartup){
 			// create a playlist from the parent dir
