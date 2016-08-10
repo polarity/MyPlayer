@@ -5,9 +5,10 @@
   "main": "src/main.js",
   "build": {
     "appId": "com.github.electron.myplayer",
-    "app-category-type": "public.app-category.music",
+    "category": "public.app-category.music",
+    "asar": false,
     "mac": {
-      "icon": ""
+      "icon": "src/img/myplayer.icns"
     },
     "win": {
       "icon": ""
