@@ -102,6 +102,7 @@
 		var currentFile = false;
 		var recursiveSync = require("recursive-readdir-sync");
 		var id3 = require("id3js");
+		var playAfterLoad = true;
 
 		/**
 		 * Converts a buffer into an ArrayBuffer
@@ -205,7 +206,11 @@
 		wavesurfer.on('ready', function(){
 			elPos = document.querySelector(".display_length");
 			elPos.textContent = (wavesurfer.getDuration()/60).toFixed(2).replace(".",":");
-			wavesurfer.play();
+			if(playAfterLoad){
+				wavesurfer.play();
+			} else {
+				playAfterLoad = true;
+			}
 		});
 
 		wavesurfer.on('finish', function(){
@@ -315,7 +320,7 @@
 		 * @author Robert Agthe <robert@scriptshit.de
 		 * @param  {string} file path to an audio file
 		 */
-		var loadtune = function(file){
+		var loadtune = function(file, wait){
 			// remember globally file
 			currentFile = file;
 			// read id3 Tag from current loading tune!
@@ -338,6 +343,9 @@
 			// load blob
 			//wavesurfer.load("file:///"+file);
 			wavesurfer.loadBlob(loadBinary(currentFile));
+
+			// dont play after load 
+			if(wait){ playAfterLoad = false; }
 		};
 
 		/**
@@ -391,7 +399,7 @@
 			// create a playlist from the parent dir
 			createPlaylist(loadOnStartup);
 			// load file, and play
-			loadtune(loadOnStartup);
+			loadtune(loadOnStartup, true);
 		}
 
 		</script>
