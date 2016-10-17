@@ -18,7 +18,6 @@ require('electron').crashReporter.start({
 // be closed automatically when the javascript object is GCed.
 var mainWindow = null
 var appIsReady = null
-var willQuitApp = false
 
 // path to music file to load
 // on startup. init is false
