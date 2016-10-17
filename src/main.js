@@ -1,6 +1,5 @@
-var app = require('electron').app; // Module to control application life.
-var BrowserWindow = require('electron').BrowserWindow; // Module to create native browser window.
-var ipc = require('electron').ipcMain;
+var app = require('electron').app // Module to control application life.
+var BrowserWindow = require('electron').BrowserWindow // Module to create native browser window.
 
 // Windows: Only ONE single App Instance possible
 // ESI.ensureSingleInstance('MyPlayer');
@@ -12,29 +11,29 @@ require('electron').crashReporter.start({
   companyName: 'Scriptshit',
   submitURL: 'https://scriptshit.de/',
   autoSubmit: true
-});
+})
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
-var mainWindow = null;
-var appIsReady = null;
+var mainWindow = null
+var appIsReady = null
 
 // path to music file to load
 // on startup. init is false
-global.loadOnStartup = false;
+global.loadOnStartup = false
 
 // Quit when all windows are closed.
-app.on('window-all-closed', function() {
-	if (process.platform != 'darwin') {
-		app.quit();
-	}
-});
+app.on('window-all-closed', function () {
+  if (process.platform != 'darwin') {
+    app.quit()
+  }
+})
 
 if (process.platform == 'win32') {
-	// path to music file to load
-	// user opens the app with a file
-	// windows Only
-	global.loadOnStartup = process.argv[2];
+  // path to music file to load
+  // user opens the app with a file
+  // windows Only
+  global.loadOnStartup = process.argv[2]
 }
 
 /**
@@ -43,61 +42,61 @@ if (process.platform == 'win32') {
  * @param  {[type]} event [description]
  * @return {[type]} [description]
  */
-app.on("open-file", function(event, path) {
-	event.preventDefault();
+app.on('open-file', function (event, path) {
+  event.preventDefault()
 
-	// path to music file to load
-	// user opens the app with a file
-	global.loadOnStartup = path;
+  // path to music file to load
+  // user opens the app with a file
+  global.loadOnStartup = path
 
-	// app runs, but no windows open
-	if (!mainWindow && appIsReady) {
-		// create new window and listen on ready
-		createMainPlayerWindow().on('did-finish-load', function() {
-			// when window ready, open a file
-			mainWindow.webContents.send('open-file', path);
-		});
-	}
-	// a window exists and is ready loaded
-	else if (mainWindow && appIsReady) {
-		// just fire open-file event!
-		mainWindow.webContents.send('open-file', path);
-	}
-});
+  // app runs, but no windows open
+  if (!mainWindow && appIsReady) {
+    // create new window and listen on ready
+    createMainPlayerWindow().on('did-finish-load', function () {
+    // when window ready, open a file
+      mainWindow.webContents.send('open-file', path)
+    })
+  }
+  // a window exists and is ready loaded
+  else if (mainWindow && appIsReady) {
+    // just fire open-file event!
+    mainWindow.webContents.send('open-file', path)
+  }
+})
 
-var createMainPlayerWindow = function() {
-	appIsReady = true;
+var createMainPlayerWindow = function () {
+  appIsReady = true
 
-	// Create the app window
-	mainWindow = new BrowserWindow({
-		width: 600,
-		height: 200,
-		center: true,
-		resizable: false,
-		title: "MyPlayer",
-		"always-on-top": true,
-		debug: true,
-		"web-preferences": {
-			"overlay-scrollbars": false
-		}
-	});
+  // Create the app window
+  mainWindow = new BrowserWindow({
+    width: 600,
+    height: 200,
+    center: true,
+    resizable: false,
+    title: 'MyPlayer',
+    'always-on-top': true,
+    debug: true,
+    'web-preferences': {
+      'overlay-scrollbars': false
+    }
+  })
 
-	// and load the index.html of the app.
-	mainWindow.loadURL('file://' + __dirname + '/index.html');
+  // and load the index.html of the app.
+  mainWindow.loadURL('file://' + __dirname + '/index.html')
 
-	// Open the devtools.
-	mainWindow.openDevTools();
+  // Open the devtools.
+  mainWindow.openDevTools()
 
-	// Emitted when the window is closed.
-	mainWindow.on('closed', function() {
-		// Dereference the window object, usually you would store windows
-		// in an array if your app supports multi windows, this is the time
-		// when you should delete the corresponding element.
-		mainWindow = null;
-	});
-	return mainWindow;
-};
+  // Emitted when the window is closed.
+  mainWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null
+  })
+  return mainWindow
+}
 
 // This method will be called when Electron has done everything
 // initialization and ready for creating browser windows.
-app.on('ready', createMainPlayerWindow);
+app.on('ready', createMainPlayerWindow)
