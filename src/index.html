@@ -13,44 +13,61 @@
 			-webkit-user-select: none;
 			font-family: Helvetica;
 		}
-		
+
+		html {
+			height: 100%;
+			width: 100%;
+		}
 		body {
 			background-color: #1E1E1E;
 			height: 100%;
+			width: 100%;
 			overflow: hidden;
 			font-size: 16px;
+			display: flex;
+			flex-wrap: wrap;
+			flex-direction: column;
+			align-content: stretch;
 		}
 		
 		#wave {
-			width: 600px;
-			height: 128px;
+			width: 100%;
+			min-height: 128px;
 			border-bottom: 1px solid #424242;
+			flex: 3;
 		}
-		
+		.controls {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			flex:1;
+			align-content: stretch;
+			max-height: 60px;
+		}
 		.buttons {
-			float: left;
+			flex:1;
+			display: flex;
 			padding: 0px;
+			width: 80%;
 		}
-		
+
 		.buttons a {
 			color: #E2E2E2;
 			display: inline-block;
 			padding: 15px 15px;
 			background-color: #424242;
 			cursor: pointer;
-			float: left;
 			margin-right: 1px;
+			flex: 1;
 		}
 		
 		.meta {
+			flex:2;
 			font-size: 10px;
 			line-height: 1.3em;
-			float: left;
-			height: 39px;
 			color: #E2E2E2;
 			padding: 5px;
 			background-color: rgba(153, 153, 153, 0.12);
-			width: 358px;
 			overflow: hidden;
 		}
 		
@@ -72,28 +89,29 @@
 </head>
 
 <body>
-	<div id="wave">
-	</div>
-	<div class="buttons">
-		<a class="openFile" onclick="openfile()"><i class="fa fa-file-audio-o"></i></a>
-		<a class="play" onclick="replay()"><i class="fa fa-share"></i></a>
-		<a class="play" onclick="playpause()"><i class="fa fa-play"></i><i class="fa fa-pause"></i></a>
-		<a class="skip" onclick="back()"><i class="fa fa-step-backward"></i></a>
-		<a class="skip" onclick="skip()"><i class="fa fa-step-forward"></i></a>
-	</div>
-	<div class="meta">
-		<div class="timing">
-			<span class="display_pos"></span>
-			<i class="fa fa-arrow-right"></i>
-			<span class="display_length"></span>
+	<div id="wave"></div>
+	<div class="controls">
+		<div class="buttons">
+			<a class="openFile" onclick="openfile()"><i class="fa fa-file-audio-o"></i></a>
+			<a class="play" onclick="replay()"><i class="fa fa-share"></i></a>
+			<a class="play" onclick="playpause()"><i class="fa fa-play"></i><i style="display: none" class="fa fa-pause"></i></a>
+			<a class="skip" onclick="back()"><i class="fa fa-step-backward"></i></a>
+			<a class="skip" onclick="skip()"><i class="fa fa-step-forward"></i></a>
 		</div>
-		<div class="id3">
-			<span class="metatags">
-				no song loaded ...
-			</span>
-		</div>
-		<div class="fileinfo">
-			<span class="path"></span>
+		<div class="meta">
+			<div class="timing">
+				<span class="display_pos"></span>
+				<i class="fa fa-arrow-right"></i>
+				<span class="display_length"></span>
+			</div>
+			<div class="id3">
+				<span class="metatags">
+					no song loaded ...
+				</span>
+			</div>
+			<div class="fileinfo">
+				<span class="path"></span>
+			</div>
 		</div>
 	</div>
 </body>
