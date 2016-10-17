@@ -96,11 +96,11 @@ var createPlaylist = function (path) {
   })
 
   console.log(
-'Playlist created!',
-playlist,
-playlistPosition,
-currentFile
-)
+    'Playlist created!',
+    playlist,
+    playlistPosition,
+    currentFile
+  )
 }
 
 // Init Wavesurfer
@@ -109,7 +109,9 @@ wavesurfer.init({
   container: '#wave',
   waveColor: '#424242',
   progressColor: '#999',
-  cursorColor: '#F82A71'
+  cursorColor: '#F82A71',
+  barWidth: '2',
+  height: document.getElementById('wave').clientHeight
 })
 
 /**
