@@ -1,5 +1,6 @@
 var app = require('electron').app // Module to control application life.
 var BrowserWindow = require('electron').BrowserWindow // Module to create native browser window.
+var path = require('path')
 
 // Windows: Only ONE single App Instance possible
 // ESI.ensureSingleInstance('MyPlayer');
@@ -17,6 +18,7 @@ require('electron').crashReporter.start({
 // be closed automatically when the javascript object is GCed.
 var mainWindow = null
 var appIsReady = null
+var willQuitApp = false
 
 // path to music file to load
 // on startup. init is false
@@ -24,9 +26,7 @@ global.loadOnStartup = false
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
-  if (process.platform != 'darwin') {
-    app.quit()
-  }
+  app.quit()
 })
 
 if (process.platform == 'win32') {
@@ -53,12 +53,11 @@ app.on('open-file', function (event, path) {
   if (!mainWindow && appIsReady) {
     // create new window and listen on ready
     createMainPlayerWindow().on('did-finish-load', function () {
-    // when window ready, open a file
+      // when window ready, open a file
       mainWindow.webContents.send('open-file', path)
     })
-  }
-  // a window exists and is ready loaded
-  else if (mainWindow && appIsReady) {
+  } else if (mainWindow && appIsReady) {
+    // a window exists and is ready loaded
     // just fire open-file event!
     mainWindow.webContents.send('open-file', path)
   }
@@ -82,7 +81,7 @@ var createMainPlayerWindow = function () {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadURL('file://' + __dirname + '/index.html')
+  mainWindow.loadURL(path.join('file://', __dirname, '/index.html'))
 
   // Open the devtools.
   mainWindow.openDevTools()
