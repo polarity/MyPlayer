@@ -6,20 +6,14 @@
   "build": {
     "appId": "com.github.electron.myplayer",
     "category": "public.app-category.music",
-    "asar": false,
-    "mac": {
-      "icon": "src/img/myplayer.icns"
-    },
-    "win": {
-      "icon": ""
-    }
+    "asar": false
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
     "postinstall": "install-app-deps",
     "pack": "build --dir",
-    "dist": "build"
+    "dist": "build -w -o -l"
   },
   "keywords": [
     "music",
