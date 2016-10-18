@@ -311,6 +311,14 @@ holder.ondrop = function (e) {
   return false
 }
 
+// event listeners
+document.querySelector('body').addEventListener('keydown', function (event) {
+  if (event.keyCode === 32) {
+    // spacebar pressed - play/pause
+    playpause()
+  }
+})
+
 // Load on startup...
 // path to music file to load
 // user opens the app with a file
