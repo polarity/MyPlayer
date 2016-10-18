@@ -74,6 +74,11 @@ var createMainPlayerWindow = function () {
     title: 'MyPlayer',
     'always-on-top': true,
     debug: true,
+
+    // Boolean - Whether the web view accepts a single
+    // mouse-down event that simultaneously activates the window.
+    acceptFirstMouse: true,
+
     'web-preferences': {
       'overlay-scrollbars': false
     }
