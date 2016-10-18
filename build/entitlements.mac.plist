@@ -1,0 +1,20 @@
+<key>CFBundleDocumentTypes</key>
+<array>
+	<dict>
+		<key>CFBundleTypeRole</key>
+		<string>Viewer</string>
+		<key>LSIsAppleDefaultForType</key>
+		<string>Yes</string>
+		<key>LSItemContentTypes</key>
+		<array>
+			<string>public.mp3</string>
+			<string>public.aiff-audio</string>
+			<string>public.ogg</string>
+			<string>org.xiph.ogg</string>
+			<string>org.xiph.ogg-vorbis</string>
+			<string>com.microsoft.waveform-audio</string>
+			<string>public.mpeg-4-audio</string>
+			<string>com.apple.m4a-audio</string>
+		</array>
+	</dict>
+</array>
