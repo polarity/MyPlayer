@@ -1,11 +1,10 @@
-var app = require('electron').app // Module to control application life.
-var BrowserWindow = require('electron').BrowserWindow // Module to create native browser window.
+var app = require('electron').app; // Module to control application life.
+var BrowserWindow = require('electron').BrowserWindow; // Module to create native browser window.
 var path = require('path')
 
 // Windows: Only ONE single App Instance possible
-// ESI.ensureSingleInstance('MyPlayer');
+// ESI.ensureSingleInstance('MyPlayer')
 // use this https://github.com/electron/electron/blob/master/docs/api/app.md#appmakesingleinstancecallback
-
 // Report crashes to our server.
 require('electron').crashReporter.start({
   productName: 'MyPlayer',
@@ -88,7 +87,7 @@ var createMainPlayerWindow = function () {
   mainWindow.loadURL(path.join('file://', __dirname, '/index.html'))
 
   // Open the devtools.
-  mainWindow.openDevTools()
+  // mainWindow.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
