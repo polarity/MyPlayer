@@ -58,7 +58,11 @@ npm start
 ```bash
 npm run pack
 npm run dist
+npm run dist:single
 ```
+
+`npm run dist:single` creates a single Windows portable `.exe` artifact.
+Note: it is a single launcher file for distribution, but Electron still unpacks runtime files internally when the app starts.
 
 ## How playback works
 

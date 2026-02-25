@@ -15,7 +15,8 @@
     "start": "electron .",
     "postinstall": "install-app-deps",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder -w -m -l"
+    "dist": "electron-builder -w -m -l",
+    "dist:single": "electron-builder --win portable"
   },
   "keywords": [
     "music",
