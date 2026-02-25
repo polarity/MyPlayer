@@ -1,9 +1,9 @@
 # MyPlayer
 
-MyPlayer is a lightweight desktop music player built with early Electron.
+MyPlayer is a lightweight desktop music player originally built with early Electron.
 It focuses on a compact always-on-top window, waveform visualization, and quick playback controls for local audio files.
 
-> **Project status:** Archived / legacy project. The codebase targets an older Electron runtime (`1.3.x`) and is kept mostly for reference and light maintenance.
+> **Project status:** Legacy project under light maintenance. Runtime is updated to modern Electron for compatibility, while core behavior remains unchanged.
 
 ![MyPlayer icon](src/img/myplayer.png)
 
@@ -26,12 +26,12 @@ It focuses on a compact always-on-top window, waveform visualization, and quick 
 
 ## Project structure
 
-- `src/main.js` — Electron main process (window creation, app lifecycle, open-file handling).
-- `src/client.js` — Renderer logic (playback, playlist handling, metadata updates, UI events).
-- `src/index.html` — UI markup and styles.
-- `build/` — App icons and packaging metadata.
-- `resources/` — Design resources and icon source assets.
-- `doc/` — Legacy notes (e.g., file associations on macOS).
+- `src/main.js` - Electron main process (window creation, app lifecycle, open-file handling).
+- `src/client.js` - Renderer logic (playback, playlist handling, metadata updates, UI events).
+- `src/index.html` - UI markup and styles.
+- `build/` - App icons and packaging metadata.
+- `resources/` - Design resources and icon source assets.
+- `doc/` - Legacy notes (for example, file associations on macOS).
 
 ## Getting started
 
@@ -39,8 +39,7 @@ It focuses on a compact always-on-top window, waveform visualization, and quick 
 
 - Node.js and npm.
 - A desktop environment (GUI) to run Electron.
-
-Because this project targets an older Electron release, modern Node versions may not be fully compatible with all legacy dependencies.
+- Use an active Node.js LTS release.
 
 ### Install
 
@@ -69,10 +68,20 @@ npm run dist
 4. The selected track is loaded as a blob into WaveSurfer and played.
 5. Metadata and UI timing labels are updated during playback.
 
-## Known limitations (legacy behavior)
+## Recent maintenance update (2026-02-24)
+
+- Updated Electron from `1.3.x` to `40.6.0`.
+- Replaced deprecated renderer `remote` usage with IPC calls.
+- Updated main-process window creation/options for current Electron.
+- Added single-instance handling via `app.requestSingleInstanceLock()`.
+- Updated window/layout sizing so controls stay inside the fixed player window.
+- Updated WaveSurfer initialization to use a safe fallback height for canvas rendering.
+- Kept UI and playback behavior intentionally unchanged.
+
+## Known limitations
 
 - No streaming support; local files only.
-- Uses deprecated Electron APIs and old dependency versions.
+- Renderer still uses Node integration for compatibility with legacy code.
 - Minimal error handling for unreadable/corrupt media files.
 - UI is fixed-size and intentionally minimal.
 
@@ -80,8 +89,8 @@ npm run dist
 
 If you plan to modernize this project, start with:
 
-1. Upgrading Electron and replacing deprecated APIs (`remote`, older app/window options, etc.).
-2. Refreshing dependency versions and build tooling.
+1. Moving renderer file-system access into a preload layer and disabling `nodeIntegration`.
+2. Refreshing remaining dependency versions and build tooling.
 3. Adding automated tests and linting.
 4. Separating UI styles/scripts into maintainable modules.
 

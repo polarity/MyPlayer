@@ -1,8 +1,6 @@
-var remote = require('electron').remote
 var fs = require('fs')
 var _ = require('lodash')
 var pathHelper = require('path')
-var dialog = require('electron').remote.dialog
 var ipc = require('electron').ipcRenderer
 var playlist = []
 var playlistPosition = false
@@ -105,13 +103,19 @@ var createPlaylist = function (path) {
 
 // Init Wavesurfer
 var wavesurfer = Object.create(WaveSurfer)
+var waveContainer = document.getElementById('wave')
+var waveHeight = waveContainer.clientHeight || 96
+if (waveHeight < 64) {
+  waveHeight = 96
+}
+
 wavesurfer.init({
   container: '#wave',
   waveColor: '#424242',
   progressColor: '#999',
   cursorColor: '#F82A71',
-  barWidth: '2',
-  height: document.getElementById('wave').clientHeight
+  barWidth: 2,
+  height: waveHeight
 })
 
 /**
@@ -142,11 +146,11 @@ wavesurfer.on('finish', function () {
  * @param  {[type]} event [description]
  * @return {[type]} [description]
  */
-ipc.on('open-file', function (path) {
+ipc.on('open-file', function (event, filePath) {
   // create a playlist from the parent dir
-  createPlaylist(path)
+  createPlaylist(filePath)
   // load file, and play
-  loadtune(path)
+  loadtune(filePath)
 })
 
 /**
@@ -159,20 +163,14 @@ ipc.on('open-file', function (path) {
  * clicked on the "open file" icon!
  * @author Robert Agthe <robert@scriptshit.de
  */
-var openfile = function () {
-  dialog.showOpenDialog({
-    filters: [{
-      name: 'Audio',
-      extensions: ['mp3', 'm4a', 'wav']
-    }]
-  },
-function (fileNames) {
-  if (fileNames === undefined) return
+var openfile = async function () {
+  var fileName = await ipc.invoke('open-file-dialog')
+  if (!fileName) return
+
   // create a playlist from the parent dir
-  createPlaylist(fileNames[0])
+  createPlaylist(fileName)
   // load this tune, and play
-  loadtune(fileNames[0])
-})
+  loadtune(fileName)
 }
 
 /**
@@ -322,13 +320,15 @@ document.querySelector('body').addEventListener('keydown', function (event) {
 // Load on startup...
 // path to music file to load
 // user opens the app with a file
-// get the path to the file from the backend
-// remote process ...
-var loadOnStartup = remote.getGlobal('loadOnStartup') || localStorage.getItem('lastDir') || false
+// get the path to the file from the backend process
+;(async function () {
+  var loadOnStartup = await ipc.invoke('get-load-on-startup')
+  loadOnStartup = loadOnStartup || localStorage.getItem('lastDir') || false
 
-if (loadOnStartup) {
-  // create a playlist from the parent dir
-  createPlaylist(loadOnStartup)
-  // load file, and play
-  loadtune(loadOnStartup, true)
-}
+  if (loadOnStartup) {
+    // create a playlist from the parent dir
+    createPlaylist(loadOnStartup)
+    // load file, and play
+    loadtune(loadOnStartup, true)
+  }
+})()

@@ -25,44 +25,45 @@
 			overflow: hidden;
 			font-size: 16px;
 			display: flex;
-			flex-wrap: wrap;
 			flex-direction: column;
-			align-content: stretch;
 		}
 		
 		#wave {
 			width: 100%;
-			min-height: 128px;
+			min-height: 72px;
 			border-bottom: 1px solid #424242;
-			flex: 3;
+			flex: 1 1 auto;
 		}
 		.controls {
 			display: flex;
 			flex-direction: row;
-			flex-wrap: wrap;
-			flex:1;
-			align-content: stretch;
-			max-height: 60px;
+			flex: 0 0 56px;
+			min-height: 56px;
+			max-height: 56px;
+			width: 100%;
 		}
 		.buttons {
-			flex:1;
+			flex: 0 0 240px;
 			display: flex;
-			padding: 0px;
-			width: 80%;
+			padding: 0;
 		}
 
 		.buttons a {
 			color: #E2E2E2;
-			display: inline-block;
-			padding: 15px 15px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0;
 			background-color: #424242;
 			cursor: pointer;
 			margin-right: 1px;
 			flex: 1;
+			min-width: 40px;
 		}
 		
 		.meta {
-			flex:2;
+			flex: 1 1 auto;
+			min-width: 0;
 			font-size: 10px;
 			line-height: 1.3em;
 			color: #E2E2E2;
@@ -72,6 +73,8 @@
 		}
 		
 		.meta .id3 span.metatags {
+			display: block;
+			overflow: hidden;
 			white-space: nowrap;
 			text-overflow: ellipsis;
 		}
@@ -82,6 +85,8 @@
 		}
 		
 		.meta .fileinfo span.path {
+			display: block;
+			overflow: hidden;
 			white-space: nowrap;
 			text-overflow: ellipsis;
 		}
